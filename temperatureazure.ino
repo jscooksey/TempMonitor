@@ -1,10 +1,11 @@
+// This #include statement was automatically added by the Particle IDE.
+#include <SparkFunMAX17043.h>
+#include <Adafruit_DHT.h>
+
 // Name:            Photon Temperature to Azure
 // Modified by:     Justin S. Cooksey
 // 20180326:        Added battery percentage in to JSON.  No data yet, waiting on sield arival
 //                  Also expecting DHT22 for better read, as well as DHT11 is providing no data at this time
-
-// This #include statement was automatically added by the Particle IDE.  
-#include <Adafruit_DHT.h>
 
 #define DHTPIN 2            // DHT11 connected to pin D2  
 #define DHTTYPE DHT11		// DHT11 currently   
@@ -15,6 +16,8 @@ void setup()
 {  
     dht.begin();  
     delay(10000);  
+    //lipo.begin();
+    //lipo.quickStart();
 }  
 void loop()  
 {  
@@ -26,7 +29,8 @@ void loop()
     // Get data from the sensors    
     float humidity = dht.getHumidity();  
     float temperature = dht.getTempCelcius();  
-    float battery = 0.0; 
+    //float battery = lipo.getSOC();
+    float battery = 95.0; 
      
     // Format JSON string of data to return to Particle via publish command.  This is then hooked to Azure
     snprintf(payload, sizeof(payload), "{\"temperature\":\"%f\",\"humidity\":\"%f\",\"battery\":\"%f\"}",temperature,humidity,battery);  
